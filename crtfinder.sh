@@ -6,9 +6,9 @@ is_valid_domain() {
   [[ "$domain" =~ ^www\. ]] && domain="${domain#www\.}"
 
   if [[ "$domain" =~ ^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,}|xn--[a-zA-Z0-9]+)$ ]]; then
-    return 0 
+    return 0  
   else
-    return 1  
+    return 1 
   fi
 }
 
@@ -28,15 +28,15 @@ process_input() {
   echo "$subdomains"
 }
 
-if ! [ -t 0 ]; then 
+if ! [ -t 0 ]; then
   while IFS= read -r line; do
     if is_valid_domain "$line"; then
       process_input "$line"
     else
-      echo "Input pada baris \"$line\" bukan domain yang valid."
+      echo "The input on line \"$line\" is not a valid domain."
     fi
   done
-elif [ "$#" -gt 0 ]; then  
+elif [ "$#" -gt 0 ]; then
   while [ "$#" -gt 0 ]; do
     case "$1" in
       -d)
@@ -44,7 +44,7 @@ elif [ "$#" -gt 0 ]; then
         if [ -n "$1" ] && is_valid_domain "$1"; then
           process_input "$1"
         else
-          echo "Input bukan domain yang valid."
+          echo "The input is not a valid domain."
           exit 1
         fi
         ;;
@@ -55,11 +55,11 @@ elif [ "$#" -gt 0 ]; then
             if is_valid_domain "$line"; then
               process_input "$line"
             else
-              echo "Input pada baris \"$line\" bukan domain yang valid."
+              echo "The input on line \"$line\" is not a valid domain."
             fi
           done < "$1"
         else
-          echo "File tidak ditemukan atau tidak valid."
+          echo "File not found or not valid."
           exit 1
         fi
         ;;
@@ -67,12 +67,12 @@ elif [ "$#" -gt 0 ]; then
         display_help
         ;;
       *)
-        echo "Pilihan tidak valid."
+        echo "Invalid option."
         display_help
         ;;
     esac
     shift
   done
-else  
+else
   display_help
 fi
